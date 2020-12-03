@@ -1,15 +1,15 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(main)
+project(arrayfun)
 
-add_executable(main main.cpp)
+add_executable(arrayfun arrayfun.cpp)
 
-install(TARGETS main)
+install(TARGETS arrayfun)
 
 enable_testing()
-add_test(NAME main COMMAND main)
+add_test(NAME arrayfun COMMAND arrayfun)
 
 
 IF (WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-	target_link_libraries(main -static)
+	target_link_libraries(arrayfun -static)
 ENDIF()
