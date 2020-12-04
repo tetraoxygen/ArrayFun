@@ -76,6 +76,15 @@ int highestValue(std::vector<int> &data) {
 	return data.back();
 }
 
+/*
+	Function: 					countOdds()
+	Description: 				Counts the number of odd numbers in a vector
+	Arguments:
+		data (vector<int>&): 	vector to find number of odd values in
+	Return value:
+		number of odd numbers in data
+*/
+
 int countOdds(std::vector<int> data) {
 	int odds = 0; 
 	for (int i = 0; i < data.size(); i++) {
@@ -86,6 +95,15 @@ int countOdds(std::vector<int> data) {
 	return odds;
 }
 
+
+/*
+	Function: 					sum()
+	Description: 				Counts the number of odd numbers in a vector
+	Arguments:
+		data (vector<int>&): 	vector to sum values of
+	Return value:
+		sum of all values in data
+*/
 int sum(std::vector<int> data) {
 	int result = 0;
 	for (int i = 0; i < data.size(); i++) {
@@ -97,7 +115,7 @@ int sum(std::vector<int> data) {
 
 /*
 	Function: 					getDuplicateValues()
-	Description: 				
+	Description: 				Finds all values that appear more than once
 	Arguments:
 		data (vector<int>&): 	vector to find duplicates in
 	Return value:
@@ -110,7 +128,8 @@ std::vector<int> getDuplicateValues(std::vector<int> data) {
 	std::vector<int> duplicates;
 	
 	for (int i = 0; i < data.size(); i++) {
-		if (data[i] == previousValue && i > 0) {
+		// if data is the previous value, i is not 0 (you can't have a duplicate on the first go around, and if the first value is zero, something would go wrong here) and duplicates either has nothing in it, or the most recent duplicate (having the list be sorted helps a lot here) is not the value I would be inserting
+		if (data[i] == previousValue && i > 0 && (duplicates.size() == 0 || data[i] != duplicates.back())) {
 			duplicates.push_back(data[i]);
 		}
 		previousValue = data[i];
