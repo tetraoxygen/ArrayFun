@@ -21,9 +21,11 @@ int sum(std::vector<int> data);
 
 std::vector<int> getDuplicateValues(std::vector<int> data);
 
-void quickSort(std::vector<int>&,int,int);
+void sort(std::vector<int> &data);
 
-int partition(std::vector<int>&, int,int);
+void quickSort(std::vector<int>&, int, int);
+
+int partition(std::vector<int>&, int, int);
 
 
 // slight optimization to not have to run quickSort() again if it's already been run
@@ -64,21 +66,13 @@ void printData(std::vector<int> data) {
 
 // passed by reference as an optimization
 int lowestValue(std::vector<int> &data) {
-	// just wastes resources to sort the vector again, so let's not
-	if (!SORTED) {
-		quickSort(data, 0, data.size());
-	}
-	SORTED = true;
+	sort(data);
 	return data.front();
 }
 
 // passed by reference as an optimization
 int highestValue(std::vector<int> &data) {
-	// just wastes resources to sort the vector again, so let's not
-	if (!SORTED) {
-		quickSort(data, 0, data.size());
-	}
-	SORTED = true;
+	sort(data);
 	return data.back();
 }
 
@@ -100,12 +94,17 @@ int sum(std::vector<int> data) {
 	return result;
 }
 
+
+/*
+	Function: 					getDuplicateValues()
+	Description: 				
+	Arguments:
+		data (vector<int>&): 	vector to find duplicates in
+	Return value:
+		Vector of all ints that were duplicated in data
+*/
 std::vector<int> getDuplicateValues(std::vector<int> data) {
-	// just wastes resources to sort the vector again, so let's not
-	if (!SORTED) {
-		quickSort(data, 0, data.size());
-	}
-	SORTED = true;
+	sort(data);
 	
 	int previousValue = 0;
 	std::vector<int> duplicates;
@@ -122,32 +121,64 @@ std::vector<int> getDuplicateValues(std::vector<int> data) {
 
 // MARK: Sorting 
 
-
-// Sorts a list
-void quickSort(std::vector<int>& A, int p,int q)
-{
-	int r;
-	if(p < q) {
-		r=partition(A, p,q);
-		quickSort(A,p,r);  
-		quickSort(A,r+1,q);
+/*
+	Function: 					sort()
+	Description: 				Helper function that checks if the vector has already been sorted, and if so, doesn't sort it again. Also automatically fills in the correct bounds for quickSort().
+	Arguments:
+		data (vector<int>&): 	vector to sort
+*/
+void sort(std::vector<int> &data) {
+	// just wastes resources to sort the vector again, so let's not
+	if (!SORTED) {
+		quickSort(data, 0, data.size() - 1);
 	}
+	SORTED = true;
 }
 
 
-int partition(std::vector<int>& A, int p,int q)
-{
-	int x= A[p];
-	int i=p;
-	int j;
+/*
+	Function: 					quickSort()
+	Description: 				Sorts a vector in place using QuickSort.
+	Arguments:
+		values (vector<int>&):	vector to sort
+		left (int): 			left bounding of the vector
+		right (int): 			right bounding of the vector
+	*/
+// Sorts a list
+void quickSort(std::vector<int> &values, int left, int right) {
+	if(left < right) {
+		int pivotIndex = partition(values, left, right);
+		quickSort(values, left, pivotIndex - 1);
+		quickSort(values, pivotIndex, right);
+	}
+}
 
-	for (j=p+1; j<q; j++) {
-		if(A[j]<=x){
-			i=i+1;
-			std::swap(A[i],A[j]);
+/*
+	Function: 				partition()
+	Description: 			Swaps all elements smaller than the pivot to the left of the pivot
+	values (vector<int>&):	vector to sort
+	left (int): 			left bounding of the partition
+	right (int): 			right bounding of the partition
+*/
+int partition(std::vector<int> &values, int left, int right) {
+	int pivotIndex = left + (right - left) / 2;
+	int pivotValue = values[pivotIndex];
+	int i = left, j = right;
+	int temp;
+	while(i <= j) {
+		while(values[i] < pivotValue) {
+			i++;
+		}
+		while(values[j] > pivotValue) {
+			j--;
+		}
+		if(i <= j) {
+			temp = values[i];
+			values[i] = values[j];
+			values[j] = temp;
+			i++;
+			j--;
 		}
 	}
-
-	std::swap(A[i],A[p]);
 	return i;
 }
