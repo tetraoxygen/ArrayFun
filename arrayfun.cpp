@@ -1,4 +1,12 @@
 /*
+	Program:		ArrayFun
+	Author:			Charlie Welsh
+	Date:			2020-12-03
+	Dev Env:		Would be a rant -- you know what I use
+	Description:	Gets 10 ints from the user, and prints out information about that set of integers.
+*/
+
+/*
 	I used vectors instead of dataays because I wanted it to be dead simple to implement any length you'd like, or hell, even let the user pick it. I could have done this without the vectors fairly easily (arguably would have been easier, as I already knew how to use arrays), so I wanted to explain my rationale for using them. 
 */
 
