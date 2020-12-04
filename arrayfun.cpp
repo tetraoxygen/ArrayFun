@@ -7,7 +7,7 @@
 #include <vector>
 
 
-void getData(std::vector<int> &data);
+void getData(std::vector<int> &data, int length);
 
 void printData(std::vector<int> data);
 
@@ -32,18 +32,18 @@ int partition(std::vector<int>&, int, int);
 bool SORTED = false;
 int main()
 {
-	std::vector<int> userInput(10);
+	std::vector<int> userInput;
 	
 	std::cout << "Enter 10 integers (separated by a space): ";
-	getData(userInput);
-	std::cout << std::endl << "You entered: ";
+	getData(userInput, 10);
+	std::cout << std::endl << "\tYou entered: ";
 	printData(userInput);
 	std::cout << std::endl << std::endl;
-	std::cout << "Lowest value:\t" << lowestValue(userInput) << std::endl;
-	std::cout << "Highest value:\t" << highestValue(userInput) << std::endl;
-	std::cout << "# odd numbers:\t" << countOdds(userInput) << std::endl;
-	std::cout << "Sum of all:\t" << sum(userInput) << std::endl;
-	std::cout << "The following numbers appear multiple times: ";
+	std::cout << "\tLowest value:\t" << lowestValue(userInput) << std::endl;
+	std::cout << "\tHighest value:\t" << highestValue(userInput) << std::endl;
+	std::cout << "\t# odd numbers:\t" << countOdds(userInput) << std::endl;
+	std::cout << "\tSum of all:\t" << sum(userInput) << std::endl;
+	std::cout << "\tThe following numbers appear multiple times: ";
 	std::vector<int> duplicates = getDuplicateValues(userInput);
 	for (int i = 0; i < duplicates.size(); i++) {
 		std::cout << duplicates[i] << " ";
@@ -51,25 +51,56 @@ int main()
 	std::cout << std::endl;
 }
 
-void getData(std::vector<int> &data) {
-	for (int i = 0; i < data.size(); i++) {
-		std::cin >> data[i];
+
+/*
+	Function: 					getData()
+	Description: 				Gets any number of user data from the user, and appends them to the end of an array.
+	Arguments:
+		data (vector<int>&): 	vector to insert user input into
+		length (int):			number of ints to accept from the user
+*/
+void getData(std::vector<int> &data, int length) {
+	int input = 0;
+	for (int i = 0; i < length; i++) {
+		std::cin >> input;
+		data.push_back(input);
 	}
 }
 
+/*
+	Function: 					printData()
+	Description: 				prints a vector's values with spaces between them
+	Arguments:
+		data (vector<int>&): 	vector to print, space delimited
+*/
 void printData(std::vector<int> data) {
 	for (int i = 0; i < data.size(); i++) {
 		std::cout << data[i] << " ";
 	}
 }
 
-
+/*
+	Function: 					lowestValue()
+	Description: 				finds the lowest value in a vector
+	Arguments:
+		data (vector<int>&): 	vector to find lowest value of
+	Return value:
+		lowest value in data
+*/
 // passed by reference as an optimization
 int lowestValue(std::vector<int> &data) {
 	sort(data);
 	return data.front();
 }
 
+/*
+	Function: 					highestValue()
+	Description: 				finds the highest value in a vector
+	Arguments:
+		data (vector<int>&): 	vector to find highest value of
+	Return value:
+		highest value in data
+*/
 // passed by reference as an optimization
 int highestValue(std::vector<int> &data) {
 	sort(data);
@@ -84,7 +115,6 @@ int highestValue(std::vector<int> &data) {
 	Return value:
 		number of odd numbers in data
 */
-
 int countOdds(std::vector<int> data) {
 	int odds = 0; 
 	for (int i = 0; i < data.size(); i++) {
