@@ -1,5 +1,5 @@
 /*
-	I used vectors instead of dataays because I wanted it to be dead simple to implement any length you'd like, or hell, even let the user pick it. I could have done this without the vectors fairly easily, so I wanted to explain my rationale for using them. 
+	I used vectors instead of dataays because I wanted it to be dead simple to implement any length you'd like, or hell, even let the user pick it. I could have done this without the vectors fairly easily (arguably would have been easier, as I already knew how to use arrays), so I wanted to explain my rationale for using them. 
 */
 
 
@@ -122,6 +122,8 @@ std::vector<int> getDuplicateValues(std::vector<int> data) {
 
 // MARK: Sorting 
 
+
+// Sorts a list
 void quickSort(std::vector<int>& A, int p,int q)
 {
 	int r;
